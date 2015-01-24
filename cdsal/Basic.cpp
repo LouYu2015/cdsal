@@ -4,10 +4,10 @@
 
 namespace DABasic
 {
-	template<class T>
-	inline void Swap(T& a, T& b)
+	template<class Data>
+	inline void Swap(Data& a, Data& b)
 	{
-		T temp = b;
+		Data temp = b;
 		b = a;
 		a = temp;
 	}

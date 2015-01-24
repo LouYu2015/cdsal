@@ -11,8 +11,8 @@ namespace DABasic
 	typedef unsigned Index;//For storing an index.
 
 	//Functions
-	template<class T>
-	inline void Swap(T& a, T& b);
+	template<class Data>
+	inline void Swap(Data& a, Data& b);
 }
 #endif
 

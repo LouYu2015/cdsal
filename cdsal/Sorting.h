@@ -14,29 +14,29 @@ namespace Sorting
 	//-----Simple Sorting Algorithms-----
 
 	//Insertion Sort
-	template <class T>
-	void InsertionSort(T* first, T* last);
+	template <class Data>
+	void InsertionSort(Data* first, Data* last);
 
 	//Selection Sort
-	template <class T>
-	void SelectionSort(T* first, T* last);
+	template <class Data>
+	void SelectionSort(Data* first, Data* last);
 
 	//Bubblesort
-	template <class T>
-	void Bubblesort(T* first, T* last);
+	template <class Data>
+	void Bubblesort(Data* first, Data* last);
 
 	//Merge Sort
-	template <class T>
-	void MergeSort(T* first, T* last);
+	template <class Data>
+	void MergeSort(Data* first, Data* last);
 
-	template <class T>
-	void MergeSortMerge(T* first, T* mid, T* last, T* dest);//Merge [first, mid) and [mid, last), and store result in "dest"
+	template <class Data>
+	void MergeSortMerge(Data* first, Data* mid, Data* last, Data* dest);//Merge [first, mid) and [mid, last), and store result in "dest"
 
 	//Quicksort
-	template <class T>
-	void Quicksort(T* first, T* last);
+	template <class Data>
+	void Quicksort(Data* first, Data* last);
 
-	template <class T>
-	T* QuicksortPartition(T* first, T* last);//Return a pointer to "key"
+	template <class Data>
+	Data* QuicksortPartition(Data* first, Data* last);//Return a pointer to "key"
 }
 #endif

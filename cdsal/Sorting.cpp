@@ -4,10 +4,10 @@
 
 namespace Sorting
 {
-	template <class T>
-	void InsertionSort(T* first, T* last)
+	template <class Data>
+	void InsertionSort(Data* first, Data* last)
 	{
-		T key;
+		Data key;
 		int i, j,
 			length = last - first;
 		for(i = 1; i < length; i++)
@@ -20,8 +20,8 @@ namespace Sorting
 		return;
 	}
 
-	template <class T>
-	void SelectionSort(T* first, T* last)
+	template <class Data>
+	void SelectionSort(Data* first, Data* last)
 	{
 		int i, j, min,
 			length = last - first;
@@ -35,8 +35,8 @@ namespace Sorting
 		}
 	}
 
-	template <class T>
-	void Bubblesort(T* first, T* last)
+	template <class Data>
+	void Bubblesort(Data* first, Data* last)
 	{
 		int i, j,
 			length = last - first;
@@ -46,19 +46,19 @@ namespace Sorting
 					Swap(first[j], first[j - 1]);
 	}
 
-	template <class T>
-	void MergeSort(T* first, T* last)
+	template <class Data>
+	void MergeSort(Data* first, Data* last)
 	{
-		T *i, *j, *k;
+		Data *i, *j, *k;
 		if(last - first > 1)
 		{
-			T *mid = first + (last - first)/2;
+			Data *mid = first + (last - first)/2;
 			MergeSort(first, mid);
 			MergeSort(mid, last);
 		
 			//Prepare for merging
-			T *left = new T[mid - first],
-				*right = new T[last - mid],
+			Data *left = new Data[mid - first],
+				*right = new Data[last - mid],
 				*Llast = left + (mid - first),
 				*Rlast = right + (last - mid);
 			i = left;
@@ -76,10 +76,10 @@ namespace Sorting
 		}
 	}
 
-	template <class T>
-	void MergeSortMerge(T* Lfirst, T* Llast, T* Rfirst, T* Rlast, T* dest)
+	template <class Data>
+	void MergeSortMerge(Data* Lfirst, Data* Llast, Data* Rfirst, Data* Rlast, Data* dest)
 	{
-		T* i = Lfirst,
+		Data* i = Lfirst,
 			*j = Rfirst,
 			*k = dest;
 		while(i < Llast && j < Rlast)
@@ -93,21 +93,21 @@ namespace Sorting
 			*k++ = *j++;
 	}
 
-	template <class T>
-	void Quicksort(T* first, T* last)
+	template <class Data>
+	void Quicksort(Data* first, Data* last)
 	{
 		if(last - first > 1)
 		{
-			T *mid = QuicksortPartition(first, last);
+			Data *mid = QuicksortPartition(first, last);
 			Quicksort(first, mid);
 			Quicksort(mid + 1, last);
 		}
 	}
 
-	template <class T>
-	T* QuicksortPartition(T* first, T* last)
+	template <class Data>
+	Data* QuicksortPartition(Data* first, Data* last)
 	{
-		T *key = first,
+		Data *key = first,
 			*i, *j;
 
 		for(i = j = first + 1; j < last; j++)
