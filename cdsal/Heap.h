@@ -6,30 +6,33 @@
 #define HEAP_H_COMPILED
 
 #include "DABasic.h"
+#include "DAException.h"
 
 namespace Structure
 {
 	using namespace DABasic;
+	using namespace DAException;
 
 	//----- Declarations -----
-	
+
 	//Commonly used heap. It will automatically adjust its size.
-	template <class Data>
+	template <typename Data, typename Comparator = Minimum>
 	class Heap;
 
 	//Just take over part of the memory. Generally used for heap sort.
-	template <class Data>
+	template <typename Data, typename Comparator = Minimum>
 	class InplaceHeap;
 
 	//When you use it, you can refer to its elements by keep a "Index".
 	//Note: After extracted the top element, the index of it will be used for other element!
-	template <class Data>
+	template <typename Data, typename Comparator = Minimum>
 	class RefHeap;
-	
-	template <class Data>
+
+	template <typename Data, typename Comparator = Minimum>
 	class InplaceHeap
 	{
 	private:
+	    Comparator less;
 		Data* data;
 		unsigned totalSize,//Total space of "data"
 			size;//The space occupied
@@ -58,8 +61,8 @@ namespace Structure
 		unsigned TotalSize(){return totalSize;}
 	};
 
-	template <class Data>
-	class Heap: public InplaceHeap<Data>
+	template <typename Data, typename Comparator = Minimum>
+	class Heap: public InplaceHeap<Data, Comparator>
 	{
 	public:
 		Heap();
@@ -72,8 +75,8 @@ namespace Structure
 		bool ResetSize(unsigned newSize);
 	};
 
-	template <class Data>
-	class RefHeap: Heap<Data>
+	template <typename Data, typename Comparator = Minimum>
+	class RefHeap: Heap<Data, Comparator>
 	{
 	private:
 		Data** refToData;//refToData[i] points to what index i refers to
@@ -95,6 +98,7 @@ namespace Structure
 	};
 
 	//----- Implementations -----
+
 
 }
 

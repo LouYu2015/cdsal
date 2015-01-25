@@ -9,22 +9,40 @@ namespace DABasic
 {
 	//----- Declarations -----
 
-	//Types
+	//*Types
+
 	typedef unsigned Index;//For storing an index.
 
-	//Functions
+	//*Functions
 
 	//Exchange a and b
-	template<class Data>
+	template<typename Data>
 	inline void Swap(Data& a, Data& b);
 
 	//Copy [begin, end) to dir, return the end if dir
-	template<class Data>
+	template<typename Data>
 	inline Data* Copy(Data* begin, Data* end, Data* dir);
+
+	//*Comparators
+
+	template<typename Data>
+	struct Ascending
+	{
+		inline bool operator ()(Data& a, Data& b){return b < a;}
+	};
+
+	template<typename Data>
+	struct Descending
+	{
+		inline bool operator ()(Data& a, Data& b){return a < b;}
+	};
+
+	#define Minimum Descending
+	#define Maximum Ascending
 
 	//----- Implementations -----
 
-	template<class Data>
+	template<typename Data>
 	inline void Swap(Data& a, Data& b)
 	{
 		Data temp = b;
@@ -32,7 +50,7 @@ namespace DABasic
 		a = temp;
 	}
 
-	template<class Data>
+	template<typename Data>
 	inline Data* Copy(Data* begin, Data* end, Data* dir)
 	{
 		while(begin < end)
