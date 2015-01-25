@@ -10,6 +10,8 @@
 namespace Structure
 {
 	using namespace DABasic;
+
+	//----- Declarations -----
 	
 	//Commonly used heap. It will automatically adjust its size.
 	template <class Data>
@@ -41,32 +43,33 @@ namespace Structure
 
 		inline bool indexCheck(Index x){return Index >= 0 && Index < size;}
 
-		inline swapElement(Index a, Index b){Swap(data[a], data[b]);}
+		inline void swapElement(Index a, Index b){Swap(data[a], data[b]);}
 
 	public:
-		Heap();
-		Heap(Data* initData, int memSize, int size);
-		~Heap();
+		InplaceHeap();
+		InplaceHeap(Data* initData, int memSize, int size);
+		~InplaceHeap();
 
-		void insert(Data& x);
-		Data extractTop();
+		void Insert(Data& x);
+		Data ExtractTop();
 
-		Data* top(){if(data != NULL)return &data[0]; else return NULL;}
-		unsigned size(){return size;}
-		unsigned totalSize(){return totalSize;}
+		Data* Top(){if(data != NULL)return &data[0]; else return NULL;}
+		unsigned Size(){return size;}
+		unsigned TotalSize(){return totalSize;}
 	};
 
 	template <class Data>
 	class Heap: public InplaceHeap<Data>
 	{
 	public:
+		Heap();
 		Heap(Data* initData, int memSize, int size);
 		~Heap();
 
-		void insert(Data& x);
-		Data extractTop();
+		void Insert(Data& x);
+		Data ExtractTop();
 
-		bool resetSize(unsigned newSize);
+		bool ResetSize(unsigned newSize);
 	};
 
 	template <class Data>
@@ -76,26 +79,23 @@ namespace Structure
 		Data** refToData;//refToData[i] points to what index i refers to
 		Index* index;//index[i] stores the index of data[i]
 
-		inline swapElement(Index a, Index b)
-		/*{
-			Heap::swapElement(a, b);
-			Swap(index[a], index[b])
-			refToData[index[a]] = &data[a];
-			refToData[index[b]] = &data[b];
-		}*/
+		inline void swapElement(Index a, Index b);
 	public:
-		Heap();
-		Heap(Data* initData, int memSize, int size);
-		~Heap();
+		RefHeap();
+		RefHeap(Data* initData, int memSize, int size);
+		~RefHeap();
 
-		Index insert(Data& x);
-		bool decreaseKey(Index x);
-		bool deleteKey(Index x);
+		Index Insert(Data& x);
+		bool DecreaseKey(Index x);
+		bool DeleteKey(Index x);
 
 		Data* GetData(Index x){if(indexCheck(x)) reuturn refToData[x]; else return NULL;}
 
-		bool resetSize(unsigned newSize);
+		bool ResetSize(unsigned newSize);
 	};
+
+	//----- Implementations -----
+
 }
 
 #endif
