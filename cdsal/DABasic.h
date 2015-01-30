@@ -37,8 +37,11 @@ namespace DABasic
 		inline bool operator ()(Data& a, Data& b){return a < b;}
 	};
 
-	#define Minimum Descending
-	#define Maximum Ascending
+	template<typename Data>
+	using Minimum = Descending<Data>;
+
+	template<typename Data>
+	using Maximum = Ascending<Data>;
 
 	//----- Implementations -----
 
