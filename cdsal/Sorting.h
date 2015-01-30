@@ -24,7 +24,7 @@ namespace Sorting
 
 	//Bubblesort
 	template <typename Data, typename Comparator = Descending<Data> >
-	void Bubblesort(Data* first, Data* last);
+	void BubbleSort(Data* first, Data* last);
 
 	//Merge Sort
 	template <typename Data, typename Comparator = Descending<Data> >
@@ -76,7 +76,7 @@ namespace Sorting
 	}
 
 	template <typename Data, typename Comparator>
-	void Bubblesort(Data* first, Data* last)
+	void BubbleSort(Data* first, Data* last)
 	{
 	    Comparator less;
 		int i, j,
