@@ -1,22 +1,59 @@
 # Classic Data Structures and Algorithms Library
 
-This library aims at providing programmers some useful codes of algorithms and data structures. It focuses on extensibility and readability, instead of speed, because most algorithms need extend basic algorithms.
+This library aims at providing programmers some useful codes of algorithms and data structures. It focuses on extensibility and readability, rather than speed, because most algorithms need extend basic algorithms.
+
+The following is a list of all classes and functions.
 
 ## Basic
+In [DABasic.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/DABasic.h),`namespace DABasic`.[more](https://github.com/LouYu2015/cdsal/blob/master/DABasic.md)
+
+### Types
+* Index
+
 ### Functions
 * Copy
-  * Copy a block to another block.
 * Swap
-  * Exchange two data.
 
 ### Classes
-* Ascending, Descending, Maximum (=_Ascending_), Minimum (=_Descending_)
-  * Those are comparators. They both have _operator ()_ to compare two data, using _operator <_ of the data.
+* Ascending, Descending, Maximum (=`Ascending`), Minimum (=`Descending`)
+  * operator <
+
+## Exception
+In [DAException.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/DAException.h),`namespace DAException`.[more](https://github.com/LouYu2015/cdsal/blob/master/DAException.md)
+
+### Types
+* DASenderId
+* DAErrorId
+
+### Classes
+* DAError
+  * ErrorInfo
+  * SenderInfo
 
 ## Sorting Algorithms
-Each of the following is a function. Each of them has two template parameters, _typename Data_ and _typename Comparator_, and two parameters, _Data* first_ and _Data* last_. They will sort [first, last) using the comparator.
-* Insertion Sort
-* Selection Sort
-* Bubble Sort
-* Merge Sort(__Not inplace__)
+In [Sorting.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/Sorting.h),`namespace Sorting`.[more](https://github.com/LouYu2015/cdsal/blob/master/Sorting.md)
+
+### Functions
+* InsertionSort
+* SelectionSort
+* Bubbl Sort
+* MergeSort(**Not inplace**)
+  * MergeSortMerge
 * Quicksort
+  * QuicksortPartition
+
+## Heap
+In [Heap.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/Heap.h),`namespace Structure`.
+
+### Classes
+* InplaceHeap
+  * Insert
+  * ExtractTop
+  * ResetSize
+* Heap
+  * (extended from `InplaceHeap`)
+* RefHeap
+  * (extended from `Heap`)
+  * DecreaseKey
+  * Remove
+  * GetData
