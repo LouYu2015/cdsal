@@ -1,4 +1,5 @@
 # Classic Data Structures and Algorithms Library
+**This project need c++11**
 
 This library aims at providing programmers some useful codes of algorithms and data structures. It focuses on extensibility and readability, rather than speed, because most algorithms need extend basic algorithms.
 

@@ -11,7 +11,7 @@ namespace DABasic
 
 	//*Types
 
-	typedef unsigned Index;//For storing an index.
+	typedef int Index;//For storing an index.
 
 	//*Functions
 
@@ -22,6 +22,12 @@ namespace DABasic
 	//Copy [begin, end) to dir, return the end if dir
 	template<typename Data>
 	inline Data* Copy(Data* begin, Data* end, Data* dir);
+
+	template<typename Data>
+	inline void Min(Data& a, Data& b);
+
+	template<typename Data>
+	inline void Max(Data& a, Data& b);
 
 	//*Comparators
 
@@ -60,6 +66,14 @@ namespace DABasic
 			*dir++ = *begin++;
 		return dir;
 	}
+
+	template<typename Data>
+	inline void Min(Data& a, Data& b)
+	{return a<b?a:b;}
+
+	template<typename Data>
+	inline void Max(Data& a, Data& b)
+	{return a<b?b:a;}
 }
 #endif
 
