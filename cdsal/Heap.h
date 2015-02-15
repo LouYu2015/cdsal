@@ -105,7 +105,7 @@ namespace Structure
 	};
 
 	template <typename Data, typename Comparator>
-	class RefHeap: Heap<Data, Comparator>
+	class RefHeap: public Heap<Data, Comparator>, virtual public HeapBasic<Data, Comparator>
 	{
 		using HeapBasic<Data, Comparator>::data;
 		using HeapBasic<Data, Comparator>::less;
@@ -122,7 +122,9 @@ namespace Structure
 		~RefHeap();
 
 		Data** Insert(const Data& x, bool creatRef = true);
-		void Replace(Data** x, Data newKey);
+		Data ExtractTop();
+
+		void Replace(Data** x, const Data& newKey);
 		void Remove(Data** x);
 
 		void Resize(unsigned newSize);
@@ -224,7 +226,7 @@ namespace Structure
 	template <typename Data, typename Comparator>
 	void Heap<Data, Comparator>::Insert(const Data& x)
 	{
-		if(size == 0)
+		if(totalSize == 0)
 			Resize(1);
 		if(size == totalSize)
 			Resize(totalSize*2);
@@ -254,14 +256,6 @@ namespace Structure
 
 	//class RefHeap
 	template <typename Data, typename Comparator>
-	void RefHeap<Data, Comparator>::SwapElement(Index a, Index b)
-	{
-		Heap<Data, Comparator>::SwapElement(a, b);
-		Swap(*refToRef[a], *refToRef[b]);
-		Swap(refToRef[a], refToRef[b]);
-	}
-
-	template <typename Data, typename Comparator>
 	RefHeap<Data, Comparator>::RefHeap(const Data* initData, int initDataSize, int heapSize, bool creatRef)
 	{
 		Heap<Data, Comparator>::Heap(initData, initDataSize, heapSize);
@@ -270,60 +264,83 @@ namespace Structure
 		for(int i = 0; i < initDataSize; i++)
 		{
 			if(creatRef)
-			{
-				refToRef[i] = new Data**;
-				*refToRef[i] = &data[i];
-			}
+				refToRef[i] = new Data*(&data[i]);
 			else
 				refToRef[i] = NULL;
 		}
+		for(int i = initDataSize; i < heapSize; i++)
+			refToRef[i] = NULL;
 	}
 
 	template <typename Data, typename Comparator>
 	RefHeap<Data, Comparator>::~RefHeap()
 	{
+		for(int i = 0; i < size; i++)
+			delete refToRef[i];
 		delete [] refToRef;
+	}
+
+	template <typename Data, typename Comparator>
+	void RefHeap<Data, Comparator>::SwapElement(Index a, Index b)
+	{
+		Heap<Data, Comparator>::SwapElement(a, b);
+		Swap(refToRef[a], refToRef[b]);
+		if(refToRef[a] != NULL)
+			*refToRef[a] = &data[a];
+		if(refToRef[b] != NULL)
+			*refToRef[b] = &data[b];
 	}
 
 	template <typename Data, typename Comparator>
 	Data** RefHeap<Data, Comparator>::Insert(const Data& x, bool creatRef)
 	{
+		if(totalSize == 0)
+			Resize(1);
+		if(size == totalSize)
+			Resize(totalSize*2);
 		Data **result = NULL;
 		if(creatRef)
 			result = refToRef[size] = new Data*(&data[size]);
 		Heap<Data, Comparator>::Insert(x);
+
 		return result;
 	}
 
 	template <typename Data, typename Comparator>
-	void RefHeap<Data, Comparator>::Replace(Data** x, Data newKey)
+	Data RefHeap<Data, Comparator>::ExtractTop()
 	{
-		if(!Check(ToIndex(*x)))
+		delete refToRef[0];
+		refToRef[0] = NULL;
+		return Heap<Data, Comparator>::ExtractTop();
+	}
+
+	template <typename Data, typename Comparator>
+	void RefHeap<Data, Comparator>::Replace(Data** x, const Data& newKey)
+	{
+		Index i = this->ToIndex(*x);
+		if(!this->Check(i))
 			throw DAError(DA_HEAP, DA_ILLEGAL_PARAMETER);
 
-		if(less(**x, newKey))
-		{
-			**x = newKey;
-			Heapify(ToIndex(*x));
-		}
-		else
-		{
-			**x = newKey;
-			MoveUp(ToIndex(*x));
-		}
+		data[i] = newKey;
+		this->Heapify(i);
+		this->MoveUp(i);
 	}
 
 	template <typename Data, typename Comparator>
 	void RefHeap<Data, Comparator>::Remove(Data** x)
 	{
-		Index i = ToIndex(*x);//Convert to index of "data"
+		Index i = this->ToIndex(*x);//Convert to index of "data"
 		if(!this->Check(i))
 			throw DAError(DA_HEAP, DA_ILLEGAL_PARAMETER);
 
-		SwapElement(x, size-1);
+		delete refToRef[i];
+		refToRef[i] = NULL;
+		SwapElement(i, size-1);
 		size--;
-		Heapify(x);
-		MoveUp(x);
+
+		this->Heapify(i);
+		this->MoveUp(i);
+
 		if(size < totalSize/4)
 			Resize(totalSize/2);
 	}
@@ -331,10 +348,18 @@ namespace Structure
 	template <typename Data, typename Comparator>
 	void RefHeap<Data, Comparator>::Resize(unsigned newSize)
 	{
+		Data* oldData = data;
 		Heap<Data, Comparator>::Resize(newSize);
-		Data ***newRefToRef = new Data**[newSize]();
+
+		Data ***newRefToRef = new Data**[newSize];
 		Copy(refToRef, refToRef + size, newRefToRef);
+		for(unsigned i = size; i < newSize; i++)
+			newRefToRef[i] = NULL;
 		refToRef = newRefToRef;
+
+		for(unsigned i = 0; i < size; i++)
+			if(refToRef[i] != NULL)
+				*refToRef[i] += data - oldData;
 	}
 }
 
