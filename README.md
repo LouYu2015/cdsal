@@ -27,7 +27,7 @@ In [DAException.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/DAExcept
 * DAErrorId
 
 ### Classes
-* DAError
+* DAError: Store information of an error
   * ErrorInfo
   * SenderInfo
 
@@ -44,17 +44,22 @@ In [Sorting.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/Sorting.h),`
   * QuicksortPartition
 
 ## Heap
-In [Heap.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/Heap.h),`namespace Structure`.
+In [Heap.h](https://github.com/LouYu2015/cdsal/blob/master/cdsal/Heap.h),`namespace Structure`, [more](https://github.com/LouYu2015/cdsal/blob/master/Heap.md).
 
 ### Classes
-* InplaceHeap
+* HeapBasic
+  * Top
+  * Size
+  * TotalSize
+* InplaceHeap: Build a heap inplace
+  * (extended from `HeapBasic`)
   * Insert
   * ExtractTop
   * ResetSize
-* Heap
+* Heap: Build a auto-resizing non-inplace heap
   * (extended from `InplaceHeap`)
-* RefHeap
+* RefHeap: Build a auto-resizing non-inplace heap which you can keep references
   * (extended from `Heap`)
-  * DecreaseKey
+  * Replace
   * Remove
   * GetData
