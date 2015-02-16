@@ -11,7 +11,11 @@ namespace DABasic
 
 	//*Types
 
-	typedef int Index;//For storing an index.
+	//Handle to data
+	template <typename Data>
+	using HData = Data**;
+
+	typedef int Index;
 
 	//*Functions
 
@@ -24,10 +28,16 @@ namespace DABasic
 	inline Data* Copy(const Data* begin, const Data* end, Data* dir);
 
 	template<typename Data>
+	inline void Init(Data* begin, Data* end, Data& fill);
+
+	template<typename Data>
 	inline Data Min(const Data& a,const  Data& b);
 
 	template<typename Data>
 	inline Data Max(const Data& a,const  Data& b);
+
+	template<typename Data>
+	inline const Data& GetData(HData x);
 
 	//*Comparators
 
@@ -68,12 +78,23 @@ namespace DABasic
 	}
 
 	template<typename Data>
+	inline void Init(Data* begin, Data* end, Data& fill)
+	{
+		for(Data* i = begin; i < end; i++)
+			*i = fill;
+	}
+
+	template<typename Data>
 	inline Data Min(const Data& a, const Data& b)
 	{return a<b?a:b;}
 
 	template<typename Data>
 	inline Data Max(const Data& a, const Data& b)
 	{return a<b?b:a;}
+
+	template<typename Data>
+	inline const Data& GetData(HData x)
+	{return **x;}
 }
 #endif
 
